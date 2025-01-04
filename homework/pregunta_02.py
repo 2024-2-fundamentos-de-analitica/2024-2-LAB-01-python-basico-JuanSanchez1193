@@ -13,5 +13,31 @@ def pregunta_02():
 
     Rta/
     [('A', 8), ('B', 7), ('C', 5), ('D', 6), ('E', 14)]
-
     """
+    # Inicializar un diccionario para contar las apariciones
+    contador = {}
+
+    with open('files/input/data.csv', 'r') as archivo:
+        for linea in archivo:
+            # Dividir la línea en columnas y tomar la primera columna
+            letra = linea.strip().split('\t')[0]
+            # Incrementar el contador para la letra
+            if letra in contador:
+                contador[letra] += 1
+            else:
+                contador[letra] = 1
+
+    # Convertir el diccionario a una lista de tuplas y ordenarla alfabéticamente
+    resultado = sorted(contador.items())
+
+    return resultado
+
+# Llamar a la función para probar
+print(pregunta_02())
+
+                    
+
+                
+
+                    
+

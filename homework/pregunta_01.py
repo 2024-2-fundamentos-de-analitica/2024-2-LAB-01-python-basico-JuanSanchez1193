@@ -12,5 +12,19 @@ def pregunta_01():
 
     Rta/
     214
-
     """
+    #inciio de la suma
+    suma = 0
+
+    with open("files/input/data.csv", 'r') as archivo:
+        for linea in archivo:
+            columnas = linea.strip().split("\t")
+            suma += int(columnas[1])
+    return suma
+
+print(pregunta_01())
+
+
+
+
+

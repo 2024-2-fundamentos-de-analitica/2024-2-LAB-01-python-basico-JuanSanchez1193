@@ -25,5 +25,35 @@ def pregunta_08():
      (7, ['A', 'C', 'D', 'E']),
      (8, ['A', 'B', 'D', 'E']),
      (9, ['A', 'B', 'C', 'E'])]
-
     """
+    # Crear un diccionario donde la clave es el valor de la columna 2
+    # y el valor es un conjunto de letras (sin repetir)
+    valores_letras = {}
+
+    # Abrir el archivo y procesarlo línea por línea
+    with open('files/input/data.csv', 'r') as archivo:
+        for linea in archivo:
+            # Dividir la línea en columnas
+            columnas = linea.strip().split('\t')
+            
+            # Obtener el valor de la columna 2 (convertirlo a entero)
+            valor_columna_2 = int(columnas[1])  # Cambio aquí para tomar la columna 2
+            # Obtener la letra de la columna 1
+            letra_columna_1 = columnas[0]
+            
+            # Si el valor de la columna 2 ya existe en el diccionario,
+            # agregar la letra a su conjunto
+            if valor_columna_2 not in valores_letras:
+                valores_letras[valor_columna_2] = set()
+            valores_letras[valor_columna_2].add(letra_columna_1)
+
+    # Convertir el diccionario en una lista de tuplas
+    resultado = [(valor, sorted(list(letras))) for valor, letras in valores_letras.items()]
+
+    # Ordenar la lista de tuplas por el valor de la columna 2 (el primer elemento de la tupla)
+    resultado = sorted(resultado, key=lambda x: x[0])
+
+    return resultado
+
+# Llamar a la función para probar
+print(pregunta_08())

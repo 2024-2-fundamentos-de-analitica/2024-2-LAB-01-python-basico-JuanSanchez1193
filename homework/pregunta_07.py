@@ -7,50 +7,31 @@ utilizar pandas, numpy o scipy.
 
 
 def pregunta_07():
-    """
-    Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
-    contiene un valor posible de la columna 2 y una lista con todas las letras
-    asociadas (columna 1) a dicho valor de la columna 2.
+    # Definir el archivo y leerlo
+    with open('files/input/data.csv', 'r') as f:
+        lines = f.readlines()
+    
+    # Inicializar un diccionario para almacenar las asociaciones
+    associations = {}
 
-    Rta/
-    [(0, ['C']),
-     (1, ['E', 'B', 'E']),
-     (2, ['A', 'E']),
-     (3, ['A', 'B', 'D', 'E', 'E', 'D']),
-     (4, ['E', 'B']),
-     (5, ['B', 'C', 'D', 'D', 'E', 'E', 'E']),
-     (6, ['C', 'E', 'A', 'B']),
-     (7, ['A', 'C', 'E', 'D']),
-     (8, ['E', 'D', 'E', 'A', 'B']),
-     (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
-    """
-    # Crear un diccionario donde la clave es el valor de la columna 2 y el valor es una lista de letras
-    valores_letras = {}
+    # Recorrer las líneas del archivo (ignorando la primera línea de encabezado)
+    for line in lines:
+        parts = line.strip().split("\t")  # Separar los campos por tabulador
+        letter = parts[0]  # Columna 0 (letra)
+        value = int(parts[1])  # Columna 1 (valor numérico)
 
-    # Abrir el archivo y procesarlo línea por línea
-    with open('files/input/data.csv', 'r') as archivo:
-        for linea in archivo:
-            # Dividir la línea en columnas
-            columnas = linea.strip().split('\t')
-            
-            # Obtener el valor de la columna 2 y la letra de la columna 1
-            valor_columna_2 = int(columnas[2])  # Convertimos el valor de la columna 2 a entero
-            letra_columna_1 = columnas[0]
-            
-            # Si el valor ya está en el diccionario, agregar la letra a la lista
-            if valor_columna_2 in valores_letras:
-                valores_letras[valor_columna_2].append(letra_columna_1)
-            else:
-                valores_letras[valor_columna_2] = [letra_columna_1]
+        # Asociar las letras a su valor de la columna 2
+        if value not in associations:
+            associations[value] = []
+        associations[value].append(letter)
+    
+    # Crear la lista de tuplas para la respuesta
+    result = []
+    for value in sorted(associations.keys()):  # Ordenar los valores
+        result.append((value, associations[value]))
 
-    # Convertir el diccionario en una lista de tuplas
-    resultado = [(valor, letras) for valor, letras in valores_letras.items()]
+    return result
 
-    # Ordenar la lista por el valor de la columna 2 (el primer elemento de la tupla)
-    resultado = sorted(resultado, key=lambda x: x[0])
-
-    return resultado
-
-# Llamar a la función para probar
+    
+    
 print(pregunta_07())
-
